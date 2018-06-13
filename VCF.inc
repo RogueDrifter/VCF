@@ -1,13 +1,18 @@
-#define  DOOR_FIXED 				_:VCF_DOOR_FIXED
-#define  DOOR_OPENED 				_:VCF_DOOR_OPENED
-#define  DOOR_DAMAGED 				_:VCF_DOOR_DAMAGED
-#define  DOOR_REMOVED 				_:VCF_DOOR_REMOVED
-#define  VCF_DOOR_OPENED_DAMAGED 	0b11
+#define  DOOR_FIXED 					_:VCF_DOOR_FIXED
+#define  DOOR_OPENED 					_:VCF_DOOR_OPENED
+#define  DOOR_DAMAGED 					_:VCF_DOOR_DAMAGED
+#define  DOOR_REMOVED 					_:VCF_DOOR_REMOVED
+#define  VCF_DOOR_OPENED_DAMAGED 		0b11
 
-#define  LIGHT_FRONT 	Light:VCF_LIGHT_FRONT
-#define  LIGHT_BACK 	Light:VCF_LIGHT_BACK
-#define  LIGHT_RIGHT 	LightSide:VCF_LIGHT_RIGHT
-#define  LIGHT_LEFT 	LightSide:VCF_LIGHT_LEFT
+#define  LIGHT_FRONT 					Light:VCF_LIGHT_FRONT
+#define  LIGHT_BACK 					Light:VCF_LIGHT_BACK
+#define  LIGHT_RIGHT 					LightSide:VCF_LIGHT_RIGHT
+#define  LIGHT_LEFT 					LightSide:VCF_LIGHT_LEFT
+
+#define TIRE_FRONT_RIGHT 				_:FRONT_RIGHT
+#define TIRE_FRONT_LEFT 				_:FRONT_LEFT
+#define TIRE_REAR_RIGHT 				_:REAR_RIGHT
+#define TIRE_REAR_LEFT 					_:REAR_LEFT
 
 enum Light {
 	VCF_LIGHT_FRONT,
@@ -31,6 +36,13 @@ enum DoorState(<<=1) {
 	VCF_DOOR_OPENED = 1,
 	VCF_DOOR_DAMAGED,
 	VCF_DOOR_REMOVED
+}
+
+enum Tire(<<=1) {
+	REAR_RIGHT = 1,
+	FRONT_RIGHT,
+	REAR_LEFT,
+	FRONT_LEFT
 }
 
 stock IsLightEnabled(vehicleid, Light:light, LightSide:lightSide) {
@@ -110,4 +122,44 @@ stock GetVehicleRotation(vehicleid, &Float:rx, &Float:ry, &Float:rz) {
     rz = -atan2(qx * qy + qz * qw, 0.5 - qx * qx - qz * qz);
 
     return true;
+}
+
+stock IsTireEnabled(vehicleid, Tire:tire) {
+	if(0 > vehicleid > MAX_VEHICLES)
+		return false;
+
+	new VCF_panels, VCF_doors, VCF_lights, VCF_tires;
+	GetVehicleDamageStatus(vehicleid, VCF_panels, VCF_doors, VCF_lights, VCF_tires);
+
+	if(_:tire == TIRE_FRONT_RIGHT) {
+		if((((VCF_tires & _:tire) >> 1) & 0b001) == 0)
+			return true;
+	} else if(_:tire == TIRE_REAR_LEFT) {
+		if((((VCF_tires & _:tire) >> 2) & 0b01) == 0)
+			return true;
+	} else if(_:tire == TIRE_FRONT_LEFT) {
+		if(((VCF_tires & _:tire) >> 3) == 0)
+			return true;
+	} else {
+		if((VCF_tires & _:tire) == 0)
+			return true;
+	}
+
+	return false;
+}
+
+stock AlterTireState(vehicleid, Tire:tire) {
+
+	if(0 > vehicleid > MAX_VEHICLES)
+		return false;
+
+
+	new VCF_panels, VCF_doors, VCF_lights, VCF_tires;
+	GetVehicleDamageStatus(vehicleid, VCF_panels, VCF_doors, VCF_lights, VCF_tires);
+
+	VCF_tires = VCF_tires ^ _:tire;
+
+	UpdateVehicleDamageStatus(vehicleid, VCF_panels, VCF_doors, VCF_lights, VCF_tires);
+
+	return true;
 }
