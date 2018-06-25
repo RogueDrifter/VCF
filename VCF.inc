@@ -153,6 +153,9 @@ stock ToogleTireState(const vehicleid, const tire) {
 // by renatog
 public OnVehicleDamageStatusUpdate(vehicleid, playerid)
 {
+    if(GetDoorState(vehicleid, VCF_DOOR_TRUNK) == VCF_DOOR_OPENED_DAMAGED)
+        SetDoorState(vehicleid, VCF_DOOR_TRUNK, VCF_DOOR_DAMAGED);
+
     #if defined VCF_OnVehicleDamageStatusUpdate
         return VCF_OnVehicleDamageStatusUpdate(vehicleid, playerid);
     #else
@@ -169,12 +172,4 @@ public OnVehicleDamageStatusUpdate(vehicleid, playerid)
 #if defined VCF_OnVehicleDamageStatusUpdate
     forward VCF_OnVehicleDamageStatusUpdate(vehicleid, playerid);
 #endif
-// 
-
-public VCF_OnVehicleDamageStatusUpdate(vehicleid, playerid) {
-
-	if(GetDoorState(vehicleid, VCF_DOOR_TRUNK) == VCF_DOOR_OPENED_DAMAGED)
-		SetDoorState(vehicleid, VCF_DOOR_TRUNK, VCF_DOOR_DAMAGED);
-
-	return true;
-}
+//
