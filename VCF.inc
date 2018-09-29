@@ -4,6 +4,8 @@
 
 #define VCF_Included_
 
+#include <a_samp>
+
 enum {
 	VCF_LIGHT_FRONT,
 	VCF_LIGHT_BACK
