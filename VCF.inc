@@ -1,3 +1,9 @@
+#if defined VCF_Included_
+	#endinput
+#endif
+
+#define VCF_Included_
+
 enum {
 	VCF_LIGHT_FRONT,
 	VCF_LIGHT_BACK
@@ -96,7 +102,7 @@ stock SetDoorState(const vehicleid, const door, const doorState) {
 }
 
 // by RazorGuigo
-stock GetVehicleRotation(const vehicleid, &Float:rx, &Float:ry, &Float:rz) {
+static GetVehicleRotation(const vehicleid, &Float:rx, &Float:ry, &Float:rz) {
 
 	if(0 > vehicleid > MAX_VEHICLES)
 		return false;
