@@ -20,23 +20,23 @@ Include in your code and begin using the library:
 
 ```pawn
 // Check this light is on or off  
-IsLightEnabled(vehicleid, light, lightSide) 
+IsLightEnabled(vehicleid, light, lightSide); 
 
 // Changes the light status  
-ToogleLightState(vehicleid, light, lightSide) 
+ToogleLightState(vehicleid, light, lightSide); 
 
 // Get the current state of one of the vehicle doors  
 // Note: Hood and trunk are considered doors in SA-MP  
 GetDoorState(vehicleid, door) 
 
 // Changes the state of one of the vehicle doors  
-SetDoorState(vehicleid, door, doorState) 
+SetDoorState(vehicleid, door, doorState); 
 
 // Check that the tire is inflated 
-IsTireInflated(vehicleid, tire) 
+IsTireInflated(vehicleid, tire); 
 
 // Change tire condition  
-ToogleTireState(vehicleid, tire)  
+ToogleTireState(vehicleid, tire);  
 ```
 
 ## Testing
