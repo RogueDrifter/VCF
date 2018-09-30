@@ -25,8 +25,8 @@ IsLightEnabled(vehicleid, light, lightSide);
 // Changes the light status  
 ToogleLightState(vehicleid, light, lightSide); 
 
-// Get the current state of one of the vehicle doors  
-// Note: Hood and trunk are considered doors in SA-MP  
+/* Get the current state of one of the vehicle doors  
+Note: Hood and trunk are considered doors in SA-MP */  
 GetDoorState(vehicleid, door); 
 
 // Changes the state of one of the vehicle doors  
