@@ -27,7 +27,7 @@ ToogleLightState(vehicleid, light, lightSide);
 
 // Get the current state of one of the vehicle doors  
 // Note: Hood and trunk are considered doors in SA-MP  
-GetDoorState(vehicleid, door) 
+GetDoorState(vehicleid, door); 
 
 // Changes the state of one of the vehicle doors  
 SetDoorState(vehicleid, door, doorState); 
